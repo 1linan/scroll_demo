@@ -90,6 +90,24 @@ export function Data() {
     window.addEventListener("wheel", scrollFunc); // ie不支持wheel事件，若一定要兼容，可使用mousewheel
     window.addEventListener("mousewheel", scrollFunc);
 
+    let startY = 0; // 触摸起始位置的 y 坐标
+    let endY = 0; // 触摸结束位置的 y 坐标
+
+    // 监听 touchstart 事件
+    document.addEventListener('touchstart', function (e) {
+      startY = e.touches[0].pageY;
+    });
+
+    // 监听 touchend 事件
+    document.addEventListener('touchend', function (e) {
+      endY = e.changedTouches[0].pageY;
+      const deltaY = endY - startY; // 计算 y 坐标的差值
+      if (deltaY > 0) {
+        scrollUp()
+      } else if (deltaY < 0) {
+        scrollDown()
+      }
+    });
   }, [wrapperRef]);
 
 
