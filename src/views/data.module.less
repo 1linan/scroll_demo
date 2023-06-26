@@ -1,0 +1,52 @@
+.dataContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: darkcyan;
+  position: relative;
+
+  .dataItems {
+    width: 1000px;
+    padding: 20px;
+    height: 80vh;
+    overflow-y: scroll;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 10px solid paleturquoise;
+    background-color: white;
+
+    h1 {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  button {
+    border: none;
+    width: 80px;
+    height: 40px;
+    font-size: 14px;
+    margin: 5px;
+  }
+
+
+  /* 设置滚动条的样式 */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* 滚动槽 */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #F4F4F4;
+    /* background-color: gray; */
+  }
+
+  /* 滚动条滑块 */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: plum;
+  }
+}
