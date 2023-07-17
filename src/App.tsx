@@ -38,19 +38,10 @@ function App() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const wrapper: any = wrapperRef?.current;
-  //   if (currentPage === 1) {
-  //     wrapper.style.transform = `translate3d(0px, 0px, 0px)`;
-  //   } else if (currentPage === 2) {
-  //     wrapper.style.transform = `translate3d(0px, -${height - 80}px, 0px)`;
-  //   }
-  // }, [height]);
-
   useEffect(() => {
+    const wrapper: any = wrapperRef?.current;
     function scrollUp() {
       if (scrolling) return;
-      const wrapper: any = wrapperRef?.current;
       if (!wrapper) return;
       if (currentPage === 2) {
         wrapper.style.transform = `translate3d(0px, 0px, 0px)`;
@@ -113,44 +104,17 @@ function App() {
       return;
     }
 
-    function scrollFunc(e: any) {
-      let el = e || window.event;
-      el.stopPropagation();
-      if (el.wheelDelta) {
-        if (el.wheelDelta > 0) {
-          //当鼠标滚轮向上滚动时
-          scrollUp();
-        }
-        if (el.wheelDelta < 0) {
-          //当鼠标滚轮向下滚动时
-          scrollDown();
-        }
-      } else if (e.detail) {
-        if (el.detail < 0) {
-          //当鼠标滚轮向上滚动时
-          scrollUp();
-        }
-        if (el.detail > 0) {
-          //当鼠标滚轮向下滚动时
-          scrollDown();
-        }
-      }
-    }
-    // 给页面绑定鼠标滚轮事件,针对火狐的非标准事件
-    window.addEventListener("DOMMouseScroll", scrollFunc); // 给页面绑定鼠标滚轮事件，针对Google，mousewheel非标准事件已被弃用，请使用 wheel事件代替
-    window.addEventListener("wheel", scrollFunc); // ie不支持wheel事件，若一定要兼容，可使用mousewheel
-    window.addEventListener("mousewheel", scrollFunc);
-
     let startY = 0; // 触摸起始位置的 y 坐标
     let endY = 0; // 触摸结束位置的 y 坐标
 
     // 监听 touchstart 事件
-    document.addEventListener("touchstart", function (e) {
+    wrapper.addEventListener("touchstart", function (e: any) {
       startY = e.touches[0].pageY;
     });
 
+    let index = 0;
     // 监听 touchend 事件
-    document.addEventListener("touchend", function (e) {
+    wrapper.addEventListener("touchend", function (e: any) {
       endY = e.changedTouches[0].pageY;
       const deltaY = endY - startY; // 计算 y 坐标的差值
       if (deltaY > 0) {
@@ -159,6 +123,29 @@ function App() {
         debounce(scrollDown(), 300);
       }
     });
+
+    function aa(e: any) {
+      if (e.wheelDelta < 0) {
+        index--;
+        if (index < 0) {
+          index = 0;
+        }
+      }
+      if (e.wheelDelta > 0) {
+        index++;
+        if (index > 3) {
+          index = 3;
+        }
+      }
+
+      if (wrapper) {
+        wrapper.style.top = -index * 100 + "vh";
+        wrapper.style.transition = `all 800ms cubic-bezier(.34,.86,.71,.95) 0s`;
+      }
+    }
+
+    window.addEventListener("mousewheel", throttle(aa, 800));
+    window.addEventListener("wheel", throttle(aa, 800));
   }, [debounce, throttle, width, height]);
 
   return (
