@@ -21,7 +21,12 @@ import React from "react";
 export function Page1() {
   return (
     <div
-      style={{ height: `${window.innerHeight}px`, background: "pink" }}
-    ></div>
+      style={{
+        height: `${window.innerHeight}px`,
+        background: "pink",
+      }}
+    >
+      <h1>Page1</h1>
+    </div>
   );
 }

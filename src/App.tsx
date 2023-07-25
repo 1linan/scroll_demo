@@ -5,6 +5,7 @@ import { Page1 } from "./components/page1";
 import { Page2 } from "./components/page2";
 import { Page3 } from "./components/page3";
 import { Page4 } from "./components/page4";
+import { Header } from "./components/header";
 
 let currentPage = 1;
 let scrolling = false;
@@ -162,11 +163,25 @@ function App() {
   }, [debounce, throttle, width, height]);
 
   return (
-    <div className="App" ref={wrapperRef}>
-      <Page1 />
-      <Page2 />
-      <Page3 />
-      <Page4 />
+    <div className="App">
+      <Header></Header>
+      <div
+        ref={wrapperRef}
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "0",
+          zIndex: 9,
+          paddingTop: "80px",
+        }}
+      >
+        <Page1 />
+        <Page2 />
+        <Page3 />
+        <Page4 />
+      </div>
     </div>
   );
 }
